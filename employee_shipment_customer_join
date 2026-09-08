@@ -1,0 +1,18 @@
+SELECT
+  employee.idEmployee AS EmployeeID,
+  employee.EmpFirstName AS Employee,
+  customer.CompanyName AS `Serviced Customer`,
+  COUNT(shipment.idShipment) AS `Number of Shipments`
+FROM employee
+LEFT JOIN shipment
+  ON shipment.Employee_idEmployee = employee.idEmployee
+  AND shipment.Quantity >= 0
+LEFT JOIN customer
+  ON shipment.Customer_idCustomer = customer.idCustomer
+GROUP BY
+  employee.idEmployee,
+  employee.EmpFirstName,
+  customer.CompanyName
+ORDER BY
+  COUNT(shipment.idShipment) ASC,
+  employee.idEmployee ASC;
